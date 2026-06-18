@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes">
+  <meta name="description" content="PredictiveGraphs augments open-vocabulary 3D scene graphs with temporal reasoning for predictive navigation in semi-static scenes.">
+  <meta name="keywords" content="PredictiveGraphs, Perpetua*, scene graphs, temporal reasoning, robotics, navigation, semi-static scenes">
+  <meta name="author" content="Anonymous Authors">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes">
+  <meta property="og:description" content="PredictiveGraphs augments open-vocabulary 3D scene graphs with temporal reasoning for predictive navigation in semi-static scenes.">
+  <meta property="og:image" content="static/images/predictivegraphs/banner.png">
+  <meta property="og:image:alt" content="PredictiveGraphs overview figure">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes">
+  <meta name="twitter:description" content="PredictiveGraphs augments open-vocabulary 3D scene graphs with temporal reasoning for predictive navigation in semi-static scenes.">
+  <meta name="twitter:image" content="static/images/predictivegraphs/banner.png">
+
+  <meta name="citation_title" content="Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes">
+  <meta name="citation_author" content="Anonymous Authors">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ICRA">
+  <meta name="citation_pdf_url" content="static/pdfs/PredictiveGraphs.pdf">
+
+  <title>PredictiveGraphs</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+
+  <style>
+    :root {
+      --pg-ink: #172033;
+      --pg-muted: #586171;
+      --pg-line: #dde3ea;
+      --pg-soft: #f5f8fb;
+      --pg-blue: #0c5d99;
+      --pg-teal: #137b5b;
+      --pg-red: #a9192a;
+    }
+
+    body {
+      color: var(--pg-ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .hero-body {
+      padding: 4rem 1.5rem 2.25rem;
+    }
+
+    .publication-title {
+      letter-spacing: 0;
+      line-height: 1.08;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .publication-authors {
+      margin-bottom: 0.65rem;
+    }
+
+    .publication-links {
+      margin-top: 1.35rem;
+    }
+
+    .button.is-dark {
+      background: var(--pg-ink) !important;
+    }
+
+    .section {
+      padding: 3.25rem 1.5rem;
+    }
+
+    .section.is-soft {
+      background: var(--pg-soft);
+      border-bottom: 1px solid var(--pg-line);
+      border-top: 1px solid var(--pg-line);
+    }
+
+    .figure-shell {
+      margin: 0 auto;
+    }
+
+    .figure-shell img {
+      display: block;
+      height: auto;
+      width: 100%;
+    }
+
+    .banner-figure {
+      margin-top: 1.25rem;
+    }
+
+    .banner-figure img {
+      border: 1px solid var(--pg-line);
+      border-radius: 8px;
+    }
+
+    .caption {
+      color: var(--pg-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0.85rem auto 0;
+      max-width: 900px;
+      text-align: left;
+    }
+
+    .caption strong {
+      color: var(--pg-ink);
+    }
+
+    .abstract-copy {
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .video-frame {
+      border: 1px solid var(--pg-line);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: #0f1724;
+    }
+
+    .video-frame video {
+      display: block;
+      height: auto;
+      width: 100%;
+    }
+
+    .video-loader {
+      align-items: center;
+      background: rgba(15, 23, 36, 0.86);
+      color: #fff;
+      display: flex;
+      inset: 0;
+      justify-content: center;
+      opacity: 1;
+      pointer-events: none;
+      position: absolute;
+      transition: opacity 0.25s ease;
+      z-index: 1;
+    }
+
+    .video-frame.is-ready .video-loader {
+      opacity: 0;
+    }
+
+    .loader-dot {
+      animation: spin 0.9s linear infinite;
+      border: 3px solid rgba(255, 255, 255, 0.32);
+      border-radius: 999px;
+      border-top-color: #fff;
+      height: 34px;
+      width: 34px;
+    }
+
+    .video-loader-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-left: 0.85rem;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .results-grid {
+      align-items: start;
+      display: grid;
+      gap: 2.25rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 1.5rem;
+    }
+
+    .plot-figure {
+      border: 1px solid var(--pg-line);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .plot-figure img {
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .plot-figure figcaption {
+      color: var(--pg-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      margin-top: 0.85rem;
+      text-align: left;
+    }
+
+    .wide-figure {
+      border: 1px solid var(--pg-line);
+      border-radius: 8px;
+      margin-top: 2.5rem;
+      padding: 1rem;
+    }
+
+    .wide-figure img {
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .wide-figure figcaption {
+      color: var(--pg-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: 0.9rem;
+      text-align: left;
+    }
+
+    .accent-blue {
+      color: var(--pg-blue);
+      font-weight: 700;
+    }
+
+    .accent-teal {
+      color: var(--pg-teal);
+      font-weight: 700;
+    }
+
+    .accent-red {
+      color: var(--pg-red);
+      font-weight: 700;
+    }
+
+    footer.footer {
+      background: #fff;
+      border-top: 1px solid var(--pg-line);
+      padding: 2rem 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-body {
+        padding-top: 2.75rem;
+      }
+
+      .publication-title {
+        font-size: 2.05rem !important;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 2.5rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="has-text-centered">
+            <h1 class="title is-1 publication-title">Predictive Spatio-Temporal Scene Graphs for Semi-Static Scenes</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Authors</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Anonymous Institution</span>
+            </div>
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="static/pdfs/PG_APP.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Supplementary Material (Appendix)</span>
+                </a>
+              </span>
+              <!--<span class="link-block">
+                <a href="PAPER/Perpetua____RA_L/root.tex" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-alt"></i></span>
+                  <span>Source</span>
+                </a>
+              </span>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <figure class="figure-shell banner-figure">
+          <img src="static/images/predictivegraphs/banner.png" alt="PredictiveGraphs augments scene graph representations with Perpetua star filters for predictive tempo-spatio-semantic queries.">
+          <figcaption class="caption">
+            <strong>PredictiveGraphs</strong> augments open-vocabulary <span class="accent-blue">scene graph representations</span> with persistence modelling capabilities. Coupled with <strong>Perpetua*</strong> we obtain a representation that supports predictive tempo-spatio-semantic queries.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section is-soft">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3 has-text-centered">Abstract</h2>
+            <div class="content has-text-justified abstract-copy">
+              <p>
+                We have seen tremendous recent progress in our ability to build "spatio-semantic" representations that enable robots to perform complex reasoning across geometry and semantics. However, the vast majority of these methods lack any ability to perform reasoning across time. This is a desirable property in situations where a robot repeatedly observes an environment where instances may change in between observations, but in a structured way. Consider as an example a home environment where the location of a mug typically moves from the cupboard to a countertop to the sink and then back to the cupboard on a daily basis. We should be able to learn this cyclic behavior and use it to predict the state of the mug in the future. In this work, we propose a method that is able to perform this type of tempo-spatio-semantic reasoning. Underpinning the method is a filter, Perpetua*, that performs Bayesian reasoning on the states of the environment that are observed over time. This filter is integrated within a 3D scene graph structure that we call PredictiveGraphs, where nodes represent objects and edges function as Perpetua* filters encoding spatio-semantic relationships. We validate the method in both simulation and real-world dynamic navigation tasks, where our real world experiments consist of an environment that is undergoing semi-static changes at a bi-hourly frequency over a period of three weeks. In both settings, we demonstrate that our method outperforms baselines in predicting future environment states, even in the presence of distributional shifts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-soft">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Sample Experiments</h2>
+        <div class="video-frame" id="video-abstract-frame">
+          <video controls preload="metadata" playsinline aria-label="PredictiveGraphs video abstract">
+            <source src="static/videos/video_abstract.mp4" type="video/mp4">
+          </video>
+          <div class="video-loader" aria-hidden="true">
+            <span class="loader-dot"></span>
+            <span class="video-loader-text">Loading video</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Results</h2>
+        <div class="results-grid">
+          <figure class="plot-figure">
+            <img src="static/images/predictivegraphs/main_barplot.png" alt="Main PredictiveGraphs barplot comparing methods under privileged and noisy perception.">
+            <figcaption>
+              <strong>Main prediction benchmark.</strong> PredictiveGraphs with Perpetua* or FreMEn estimators outperforms baselines under both privileged and noisy perception.
+            </figcaption>
+          </figure>
+          <figure class="plot-figure">
+            <img src="static/images/predictivegraphs/secondary_barplot.png" alt="Secondary PredictiveGraphs barplot showing simulation adaptation and real-world navigation results.">
+            <figcaption>
+              <strong>Adaptation and real-world navigation.</strong> Perpetua* improves performance under distributional shifts, while PredictiveGraphs supports robust dynamic navigation with noisy real-world data.
+            </figcaption>
+          </figure>
+        </div>
+        <figure class="figure-shell wide-figure">
+          <img src="static/images/predictivegraphs/doors.png" alt="Predictive navigation door experiment showing blocked shortest path anticipation and feasible replanning.">
+          <figcaption>
+            <strong>Predictive Navigation:</strong> PredictiveGraphs uses its predictive capabilities to anticipate that the shortest path to its goal is blocked (<span class="accent-red">low probability</span>). This allows it to preemptively adapt its navigation plan, choosing a path that is longer but feasible (<span class="accent-teal">high probability</span>), and successfully reaching the target without visiting unnecessary locations.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container is-max-desktop">
+      <div class="content has-text-centered">
+        <p>
+          This project page was adapted from the Academic Project Page Template.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const videoFrame = document.getElementById("video-abstract-frame");
+    const video = videoFrame && videoFrame.querySelector("video");
+
+    if (videoFrame && video) {
+      const markReady = () => videoFrame.classList.add("is-ready");
+      video.addEventListener("loadeddata", markReady, { once: true });
+      video.addEventListener("canplay", markReady, { once: true });
+      video.addEventListener("error", markReady, { once: true });
+      if (video.readyState >= 2) {
+        markReady();
+      }
+    }
+  </script>
+</body>
+</html>
